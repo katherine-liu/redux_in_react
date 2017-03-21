@@ -1,0 +1,19 @@
+# IDE
+.idea
+learn_redux_in_react.iml
+
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# production
+/build
+/dist
+
+# misc
+.DS_Store
+.env
+npm-debug.log
+
