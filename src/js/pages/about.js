@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+import promise from 'redux-promise-middleware';
 import axios from 'axios';
 
 //const reducer = (initialState = 0, action) => {
@@ -69,18 +70,23 @@ const reducer = (state = initialState, action) => {
     return state;
 }
 
-const middleware = applyMiddleware(thunk, logger());
+const middleware = applyMiddleware(promise(), thunk, logger());
 const store = createStore(reducer, middleware);
 
-store.dispatch((dispatch) => {
-    dispatch({type: 'FETCH_USERS_START'})
-    axios.get('http://rest.learncode.academy/api/wstern/users')
-        .then((response) => {
-            dispatch({type: 'RECEIVE_USERS', payload: response.data})
-        })
-        .catch((error) => {
-            dispatch({type: 'FETCH_USERS_ERROR', payload: error})
-        })
+//store.dispatch((dispatch) => {
+//    dispatch({type: 'FETCH_USERS_START'})
+//    axios.get('http://rest.learncode.academy/api/wstern/users')
+//        .then((response) => {
+//            dispatch({type: 'RECEIVE_USERS', payload: response.data})
+//        })
+//        .catch((error) => {
+//            dispatch({type: 'FETCH_USERS_ERROR', payload: error})
+//        })
+//})
+
+store.dispatch({
+    type: 'FETCH_USER',
+    payload: axios.get('http://rest.learncode.academy/api/wstern/users'),
 })
 
 class About extends Component {
